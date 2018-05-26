@@ -1,5 +1,6 @@
 const cwd = process.cwd();
 const delay = require("delay");
+const logger = require(`${cwd}/helpers/logger`)();
 const Stocks = require(`${cwd}/stocks/stocks`);
 let stocks = new Stocks();
 
@@ -18,14 +19,10 @@ async function getQuote() {
     // console.log(quotes);
     await quotesDbo.insertBatch(quotes);
     count += items.length;
-    console.log(
-      `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()} ${date.getUTCHours()}:${date.getUTCFullYear()}: ${count} rows inserted into db`
-    );
+    console.log(`${count} quotes inserted`);
     await delay(1000);
   }
-  console.log(
-    "-------------------------------------------------------------------------------------------"
-  );
+  logger.log(`${count} rows inserted into db`);
 }
 
 async function getQuotes() {
@@ -35,7 +32,6 @@ async function getQuotes() {
     const day = date.getUTCDay();
     const hour = date.getUTCHours() - 4;
     if (!(day == 0 || day == 6 || hour < 9 || hour > 16)) {
-      console.log(`Today ${day} time ${hour}`);
       await getQuote();
     }
     await delay(TimeDelay);
@@ -52,4 +48,4 @@ db()
     await getQuotes();
     console.log("Done");
   })
-  .catch(err => console.log(err));
+  .catch(err => logger.log(err + ""));
