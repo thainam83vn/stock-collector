@@ -6,8 +6,8 @@ module.exports = class SymbolsDb {
 
   drop() {
     return new Promise((resolve, reject) => {
-      this.dbo.collection(Table).drop((err, res) => {
-        if (err) return reject(err);
+      this.dbo.dropCollection(Table, (err, res) => {
+        if (err) return resolve(err);
         resolve(res);
       });
     });
