@@ -41,11 +41,11 @@ async function getQuotes() {
 const db = require("./models");
 db()
   .then(async models => {
-    console.log("connected to DB");
+    logger.log("Connected to DB");
     quotesDbo = models.quotes;
     symbolsDbo = models.symbols;
     symbolNames = (await symbolsDbo.all()).map(item => item.Symbol);
     await getQuotes();
-    console.log("Done");
+    logger.log("Done");
   })
   .catch(err => logger.log(err + ""));
