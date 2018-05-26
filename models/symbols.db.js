@@ -29,4 +29,16 @@ module.exports = class SymbolsDb {
     }
     return Promise.all(promises);
   }
+
+  all() {
+    return new Promise((resolve, reject) => {
+      this.dbo
+        .collection(Table)
+        .find()
+        .toArray((err, data) => {
+          if (err) return reject(err);
+          resolve(data);
+        });
+    });
+  }
 };
