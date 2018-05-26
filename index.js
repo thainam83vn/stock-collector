@@ -12,18 +12,28 @@ async function getQuotes() {
     setTimeout(() => getQuotes(), TimeDelay);
   }
   const quotes = await stocks.quotes();
-  quotesDb.insertBatch(quotes).then(data => {
-    console.log(`${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()} ${date.getUTCHours()}:${date.getUTCFullYear()}: inserted into db`);
-    setTimeout(() => getQuotes(), TimeDelay);
-  }).catch(err => {
-    console.log(err);
-    setTimeout(() => getQuotes(), 1000 * 60);
-  });
+  console.log(quotes);
+  quotesDb
+    .insertBatch(quotes)
+    .then(data => {
+      console.log(
+        `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()} ${date.getUTCHours()}:${date.getUTCFullYear()}: inserted into db`
+      );
+      setTimeout(() => getQuotes(), TimeDelay);
+    })
+    .catch(err => {
+      console.log(err);
+      setTimeout(() => getQuotes(), 1000 * 60);
+    });
 }
 
-require(`${cwd}/helpers/mongodb`)().then(db => {
-  dbo = db.db('stocks');
-  const QuoteDb = require(`${cwd}/models/quotes.db`);
-  quotesDb = new QuoteDb(dbo);
-  getQuotes();
-}).catch(err => console.log(err));
+require(`${cwd}/helpers/mongodb`)()
+  .then(db => {
+    dbo = db.db("stocks");
+    const QuoteDb = require(`${cwd}/models/quotes.db`);
+    quotesDb = new QuoteDb(dbo);
+    getQuotes();
+  })
+  .catch(err => console.log(err));
+
+// getQuotes();
