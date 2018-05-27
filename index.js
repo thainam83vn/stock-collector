@@ -4,7 +4,7 @@ const logger = require(`${cwd}/helpers/logger`)();
 const Stocks = require(`${cwd}/stocks/stocks`);
 let stocks = new Stocks();
 
-const TimeDelay = 3600 * 1000;
+const TimeDelay = 60 * 1000;
 let dbo, quotesDbo, symbolsDbo, symbolNames;
 
 async function getQuote() {
