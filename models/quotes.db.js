@@ -20,18 +20,24 @@ module.exports = class QuotesDb {
       let date = new Date();
       promises.push(
         new Promise((resolve, reject) => {
-          this.dbo
-            .collection(Table)
-            .insert(
-              { symbol: symbol, date: date, value: value },
-              (err, data) => {
-                if (err) reject(err);
-                resolve(data);
-              }
-            );
+          this.dbo.collection(Table).insert({ ...value.quote }, (err, data) => {
+            if (err) reject(err);
+            resolve(data);
+          });
         })
       );
     }
     return Promise.all(promises);
+  }
+
+  insert(symbol, data) {
+    return new Promise((resolve, reject) => {
+      this.dbo
+        .collection(Table)
+        .insert({ symbol, time: new Date(), ...data }, (err, data) => {
+          if (err) reject(err);
+          resolve(data);
+        });
+    });
   }
 };
