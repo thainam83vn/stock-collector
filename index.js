@@ -8,33 +8,33 @@ const TimeDelay = 20 * 1000;
 let dbo, quotesDbo, symbolsDbo, symbolNames;
 let lastOpenTime;
 
-async function getSingleQuote() {
-  const date = new Date();
-  let count = 0;
-  for (let i = 0; i < symbolNames.length; i += 100) {
-    const items = [];
-    for (let j = 0; j < 100 && i + j < symbolNames.length; j++) {
-      items.push(symbolNames[i + j]);
-    }
-    const quotes = await stocks.quotes(items);
-    // console.log(quotes);
-    const openTime = quotes[symbolNames[0]].quote.openTime;
-    const closeTime = quotes[symbolNames[0]].quote.closeTime;
-    if (openTime - lastOpenTime > 0 || !lastOpenTime) {
-      console.log({
-        openTime: new Date(openTime),
-        closeTime: new Date(closeTime)
-      });
-      await quotesDbo.insertBatch(quotes);
-    }
-    lastOpenTime = openTime;
+// async function getSingleQuote() {
+//   const date = new Date();
+//   let count = 0;
+//   for (let i = 0; i < symbolNames.length; i += 100) {
+//     const items = [];
+//     for (let j = 0; j < 100 && i + j < symbolNames.length; j++) {
+//       items.push(symbolNames[i + j]);
+//     }
+//     const quotes = await stocks.quotes(items);
+//     // console.log(quotes);
+//     const openTime = quotes[symbolNames[0]].quote.openTime;
+//     const closeTime = quotes[symbolNames[0]].quote.closeTime;
+//     if (openTime - lastOpenTime > 0 || !lastOpenTime) {
+//       console.log({
+//         openTime: new Date(openTime),
+//         closeTime: new Date(closeTime)
+//       });
+//       await quotesDbo.insertBatch(quotes);
+//     }
+//     lastOpenTime = openTime;
 
-    count += items.length;
-    console.log(`${count} quotes inserted`);
-    await delay(100);
-  }
-  logger.log(`${count} rows inserted into db`);
-}
+//     count += items.length;
+//     console.log(`${count} quotes inserted`);
+//     await delay(100);
+//   }
+//   logger.log(`${count} rows inserted into db`);
+// }
 
 async function realtimeQuote(symbol) {
   const data = await stocks.realtime(symbol);

@@ -1,0 +1,20 @@
+
+5:32: Connected to DB
+5:32: ReferenceError: data is not defined
+5:33: Connected to DB
+5:36: Connected to DB
+5:36: ReferenceError: id is not defined
+5:36: Connected to DB
+5:37: Connected to DB
+5:38: Connected to DB
+5:39: Connected to DB
+5:45: SyntaxError: Missing catch or finally after try
+5:46: SyntaxError: Missing catch or finally after try
+5:46: Connected to DB
+5:46: TypeError: quotes.find(...).then is not a function
+5:47: Connected to DB
+5:48: Connected to DB
+5:48: Connected to DB
+5:49: Connected to DB
+5:51: Connected to DB
+5:51: Connected to DB
